@@ -1,4 +1,6 @@
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import "reflect-metadata";
+
+import { Alert , View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { styles } from './styles';
 import {
   watchPositionAsync,
@@ -10,11 +12,21 @@ import {
 import { useEffect, useState, useRef } from 'react';
 import MapView, { Marker } from 'react-native-maps';
 import Icon from 'react-native-vector-icons/FontAwesome';
-
-
+import { dataSource } from './src/database/index';
+import { EventoEntity } from "./src/database/entities/EventoEntity";
 
 export default function App() {
+  const [nome, setNome] = useState('');
+  const [quantity, setQuantity]= useState('');
   const [location, setLocation] = useState<LocationObject | null>(null);
+  const [eventos, setEventos] = useState<EventoEntity[]>([]);
+
+  async function loadevento(){
+    const productRepository = dataSource.getRepository(EventoEntity)
+    const eventos= await productRepository.find();
+    setEventos(eventos);
+  }
+
   async function requestLocationPermissions() {
     const { granted } = await requestBackgroundPermissionsAsync();
     if (granted) {
@@ -27,6 +39,28 @@ export default function App() {
   useEffect(() => {
     requestLocationPermissions();
   }, []);
+
+  useEffect(() => {
+    const connect= async()=>{
+      if ( !dataSource.isInitialized){
+        await dataSource.initialize();
+        loadevento()
+      }
+    }
+    connect();
+  }, [])
+
+  async function hadleAdd(){
+    if(!nome.trim() || !quantity.trim()){
+      Alert.alert("Informe o produto e a quantidade!");
+    }
+    const evento = new EventoEntity();
+    evento.nome = nome;
+    evento.quantity= Number(quantity);
+
+    await dataSource.manager.save(evento);
+    Alert.alert(`Evento cadastrado. ID: ${evento.id}`);
+   }
 
   function HandleRegionChange(region: any) {
     watchPositionAsync({
@@ -51,7 +85,7 @@ export default function App() {
             longitude: location.coords.longitude,
             latitudeDelta: 0.005,
             longitudeDelta: 0.005,
-          }}
+         }}
         >
           <Marker
             coordinate={{
