@@ -13,14 +13,10 @@ export const styles = StyleSheet.create({
   },
   botao: {
     backgroundColor: 'black',
-    padding: 8,
+    padding: 3,
     borderRadius: 5,
     position: 'absolute',
-    bottom: 20,
-    right: 20,
-  },
-  textoBotao: {
-    color: 'white',
-    fontWeight: 'bold',
+    bottom: 10,
+    right: 15,
   },
 });
