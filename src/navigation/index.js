@@ -3,17 +3,14 @@ import { Home } from "../screens/Home/Home";
 import { Mapa } from "../screens/Mapa/Mapa";
 import { Favoritos } from "../screens/Favoritos/Favoritos";
 import { Perfil } from "../screens/Perfil/Perfil";
-import { Login } from "../screens/Login/Login";
 
-import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
 const Tab = createBottomTabNavigator();
 
-export const Navegator = () => {
+export function Navegator (){
   return (
-    <NavigationContainer>
       <Tab.Navigator
         screenOptions={({ route }) => ({
           tabBarIcon: ({ focused, color, size }) => {
@@ -31,15 +28,22 @@ export const Navegator = () => {
           },
           tabBarActiveTintColor: "#00A8FF",
           tabBarInactiveTintColor: "gray",
-          tabBarHideOnKeyboard: true
+          tabBarHideOnKeyboard: true,
         })}
       >
-        <Tab.Screen name="Home" component={Home} />
-        <Tab.Screen name="Mapa" component={Mapa} />
+        <Tab.Screen
+          name="Home"
+          component={Home}
+          options={{ title: "Página Inicial" }}
+        />
+        <Tab.Screen
+          name="Mapa"
+          component={Mapa}
+          options={{ title: "Mapa de Eventos" }}
+        />
         <Tab.Screen name="Favoritos" component={Favoritos} />
         <Tab.Screen name="Perfil" component={Perfil} />
-        <Tab.Screen name="Login" component={Login} />
       </Tab.Navigator>
-    </NavigationContainer>
+
   );
 };
