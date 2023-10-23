@@ -7,7 +7,7 @@ import { collection, getDocs } from "firebase/firestore";
 
 export function Perfil({ navigation }) {
   const [id, setId] = useState(null);
-  const [dados, setDados] = useState(null);
+  const [dados, setDados] = useState("");
 
   useEffect(() => {
     onAuthStateChanged(FIREBASE_AUTH, (user) => {
@@ -22,7 +22,7 @@ export function Perfil({ navigation }) {
 
   useEffect(() => {
     const getDados = async () => {
-      if (id) {
+      if (id!=null) {
         const querySnapshot = await getDocs(
           collection(FIREBASE_DATABASE, "users")
         );
@@ -72,11 +72,14 @@ export function Perfil({ navigation }) {
       ) : (
         <View style={styles.container}>
           <Text style={styles.tittle}>
-            {dados.nome} 
+            {dados.nome}
           </Text>
           <Text style={styles.descricao}>
             {dados.email}
           </Text>
+          <TouchableOpacity style={styles.button3} onPress={() =>navigation.navigate("Editar perfil")}>
+            <Text style={styles.buttontext4}>Editar perfil</Text>
+          </TouchableOpacity>
           <TouchableOpacity style={styles.button3} onPress={deslogar}>
             <Text style={styles.buttontext3}>Sair da conta</Text>
           </TouchableOpacity>

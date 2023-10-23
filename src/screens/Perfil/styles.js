@@ -59,9 +59,16 @@ export const styles = StyleSheet.create({
   buttontext3: {
     color: "red",
     fontSize: 13,
-    fontWeight: "bold",
+    // fontWeight: "bold",
     textAlign: "center",
   },
+  buttontext4: {
+    color: "gray",
+    fontSize: 15,
+    fontWeight: "bold",
+    textAlign: "center",
+  }
+  ,
   descricao:{
     color: "gray",
     fontSize: 15,
