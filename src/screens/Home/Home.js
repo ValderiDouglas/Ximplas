@@ -1,6 +1,9 @@
-import React from "react";
-import { View, Text, FlatList, StyleSheet } from "react-native";
+import React, { useState } from "react";
+import { View, Text, FlatList, Button } from "react-native";
+import { onAuthStateChanged, signOut } from "firebase/auth";
+import { FIREBASE_AUTH } from "../../../firebaseConfig";
 import { styles, evento } from "./styles";
+
 const data = [
   { id: "1", text: "Item 1" },
   { id: "2", text: "Item 2" },
@@ -41,9 +44,7 @@ function Flat({ data }) {
 export function Home() {
   return (
     <View style={styles.container}>
-        <Flat data={data} />
-        <Flat data={data} />
-        <Flat data={data} />
+      <Flat data={data} />
     </View>
   );
 }

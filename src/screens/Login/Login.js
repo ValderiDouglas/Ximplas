@@ -1,14 +1,31 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+} from "react-native";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { FIREBASE_AUTH } from "../../../firebaseConfig";
 
-export const Login = () => {
+export const Login = ({navigation}) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const auth = FIREBASE_AUTH;
+
   const handleLogin = () => {
-    console.log("Email:", email);
-    console.log("Password:", password);
-  };
+    signInWithEmailAndPassword(auth, email, password)
+    .then(() => {
+      console.log("Usuario logado com sucesso");
+      navigation.navigate("Perfil")
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+
+  }; 
 
   return (
     <View style={styles.container}>
@@ -26,7 +43,7 @@ export const Login = () => {
         value={password}
         onChangeText={(text) => setPassword(text)}
       />
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity style={styles.button} onPress={ handleLogin }>
         <Text style={styles.buttontext}>ENTRAR</Text>
       </TouchableOpacity>
     </View>
@@ -36,8 +53,8 @@ export const Login = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    backgroundColor: '#fff',
+    justifyContent: "center",
+    backgroundColor: "#fff",
     padding: 20,
   },
   title: {

@@ -6,20 +6,41 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from "react-native";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { FIREBASE_AUTH, FIREBASE_DATABASE } from "../../../firebaseConfig";
+import { addDoc, collection } from "firebase/firestore";
 
-export const Singup = () => {
+export const Singup = ({navigation}) => {
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmpassword, setConfirmPassword] = useState("");
 
-  const handleSingup = () => {
-    console.log("Nome:", nome);
-    console.log("Email:", email);
-    console.log("Password:", password);
-    console.log("Confirm Password:", confirmpassword);
-  };
+  const auth = FIREBASE_AUTH;
 
+  const handleSingup = () => {
+    if (password !== confirmpassword) {
+      alert("Senhas diferentes");
+      return;
+    } else {
+    createUserWithEmailAndPassword(auth, email, password)
+    .then(( item ) => {
+      const user = item.user;
+      console.log("Usuario criado com sucesso");
+      addDoc(collection(FIREBASE_DATABASE, "users"), {
+        id: user.uid,
+        nome: nome,
+        email: email,
+      });
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+    }
+    navigation.navigate("Perfil")
+  };
+  
+  
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Fazer Sing up</Text>
@@ -51,7 +72,7 @@ export const Singup = () => {
       />
 
       <TouchableOpacity style={styles.button} onPress={handleSingup}>
-        <Text style={styles.buttontext}>ENTRAR</Text>
+        <Text style={styles.buttontext}>CADASTRAR</Text>
       </TouchableOpacity>
     </View>
   );

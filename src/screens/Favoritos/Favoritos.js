@@ -1,5 +1,5 @@
-import React from "react";
-import { View, Text, FlatList, StyleSheet } from "react-native";
+import React, { useEffect } from "react";
+import { View, Text, FlatList, Button } from "react-native";
 import { styles } from "./styles";
 const data = [
   { id: "1", text: "Item 1" },
