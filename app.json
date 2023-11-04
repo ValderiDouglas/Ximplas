@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "app",
+    "name": "Ximplas",
     "slug": "ximplas",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -11,9 +11,7 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },
@@ -22,16 +20,21 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyAeP3_mcoTCcU0BXcypjEGs_7y-k_KhHVo"
+        }
+      },
       "package": "com.douggamer1000.ximplas"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
+    "plugins": [["expo-location"]],
     "extra": {
       "eas": {
         "projectId": "598c3d5d-3146-44cf-93a6-1b07f4110eba"
       }
-    },
-    "owner": "douggamer1000"
+    }
   }
 }

@@ -8,7 +8,7 @@ import {
   LocationAccuracy
 } from 'expo-location';
 import { useEffect, useState, useRef } from 'react';
-import MapView, { Marker } from 'react-native-maps';
+import MapView, { Marker , PROVIDER_GOOGLE } from 'react-native-maps';
 import Ionicons from "react-native-vector-icons/Ionicons";
 
 export function Mapa() {
@@ -41,7 +41,7 @@ export function Mapa() {
     <View style={styles.container}>
       {location &&
         <>
-          <MapView
+          <MapView provider={PROVIDER_GOOGLE}
             ref={mapRef}
             style={styles.map}
             initialRegion={{
