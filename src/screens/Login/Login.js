@@ -16,7 +16,7 @@ export const Login = ({navigation}) => {
   const auth = FIREBASE_AUTH;
 
   const handleLogin = () => {
-    signInWithEmailAndPassword(auth, email, password)
+    signInWithEmailAndPassword(auth, email.toLowerCase(), password)
     .then(() => {
       console.log("Usuario logado com sucesso");
       navigation.navigate("Perfil")

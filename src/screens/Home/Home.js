@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, FlatList } from "react-native";
+import { View, ScrollView, Text, FlatList } from "react-native";
 import { styles, evento } from "./styles";
 
 const data = [
@@ -41,8 +41,12 @@ function Flat({ data }) {
 
 export function Home() {
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <Flat data={data} />
-    </View>
+      <Flat data={data} />
+      <Flat data={data} />
+      <Flat data={data} />
+      <Flat data={data} />
+    </ScrollView>
   );
 }

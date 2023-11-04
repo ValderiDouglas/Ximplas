@@ -1,12 +1,10 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
     backgroundColor: "#fff",
     padding: 20,
-    justifyContent: "flex-start",
   },
   title: {
     fontSize: 24,
@@ -26,7 +24,14 @@ export const styles = StyleSheet.create({
     padding: 15,
     width: 370,
     alignSelf: "center",
-    marginBottom: 40,
+    marginBottom: 20,
+  },
+  button1: {
+    backgroundColor: "#00A8FF",
+    borderRadius: 3,
+    padding: 15,
+    width: 370,
+    alignSelf: "center",
   },
   button2: {
     backgroundColor: "#fff",

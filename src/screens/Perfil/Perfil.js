@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity } from "react-native";
 import { styles } from "./styles";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { FIREBASE_AUTH, FIREBASE_DATABASE } from "../../../firebaseConfig";
-import { collection, getDocs } from "firebase/firestore";
+import { getFirestore, collection, doc, getDoc } from "firebase/firestore";
 
 export function Perfil({ navigation }) {
   const [id, setId] = useState(null);
@@ -12,8 +12,7 @@ export function Perfil({ navigation }) {
   useEffect(() => {
     onAuthStateChanged(FIREBASE_AUTH, (user) => {
       if (user) {
-        const uid = user.uid;
-        setId(uid);
+        setId(user.uid);
       } else {
         setId(null);
       }
@@ -22,15 +21,15 @@ export function Perfil({ navigation }) {
 
   useEffect(() => {
     const getDados = async () => {
-      if (id!=null) {
-        const querySnapshot = await getDocs(
-          collection(FIREBASE_DATABASE, "users")
-        );
-        querySnapshot.forEach((doc) => {
-          if (doc.data().id === id) {
-            setDados(doc.data()); // Alterado para definir os dados do documento
-          }
-        });
+      if (id != null) {
+        const db = getFirestore();
+        const docRef = doc(db, "users", id); // Alterado para usar o ID do usuário atual
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+          setDados(docSnap.data()); // Alterado para definir os dados do documento
+        } else {
+          console.log("No such document!");
+        }
       }
     };
     getDados();
@@ -71,18 +70,24 @@ export function Perfil({ navigation }) {
         </View>
       ) : (
         <View style={styles.container}>
-          <Text style={styles.tittle}>
-            {dados.nome}
-          </Text>
-          <Text style={styles.descricao}>
-            {dados.email}
-          </Text>
-          <TouchableOpacity style={styles.button3} onPress={() =>navigation.navigate("Editar perfil")}>
+          <Text style={styles.tittle}>{dados.nome}</Text>
+          <Text style={styles.descricao}>{dados.email}</Text>
+          <TouchableOpacity
+            style={styles.button3}
+            onPress={() => navigation.navigate("Editar perfil")}
+          >
             <Text style={styles.buttontext4}>Editar perfil</Text>
           </TouchableOpacity>
+          <View style={{flex: 1, justifyContent: 'center', marginBottom: 20}}>
+          <TouchableOpacity style={styles.button1} onPress={() => navigation.navigate("Eventos")}>
+            <Text style={styles.buttontext1}>EVENTOS</Text>
+          </TouchableOpacity>
+          </View>
+          <View style={{flex: 1, justifyContent: 'flex-end', marginBottom: 20}}>
           <TouchableOpacity style={styles.button3} onPress={deslogar}>
             <Text style={styles.buttontext3}>Sair da conta</Text>
           </TouchableOpacity>
+          </View>
         </View>
       )}
     </View>

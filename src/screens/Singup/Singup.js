@@ -1,46 +1,43 @@
 import React, { useState } from "react";
 import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  StyleSheet,
+ View,
+ Text,
+ TextInput,
+ TouchableOpacity,
+ StyleSheet,
 } from "react-native";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { FIREBASE_AUTH, FIREBASE_DATABASE } from "../../../firebaseConfig";
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, setDoc, collection, doc } from "firebase/firestore";
 
-export const Singup = ({navigation}) => {
-  const [nome, setNome] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmpassword, setConfirmPassword] = useState("");
+export const Singup = ({ navigation }) => {
+ const [nome, setNome] = useState("");
+ const [email, setEmail] = useState("");
+ const [password, setPassword] = useState("");
+ const [confirmpassword, setConfirmPassword] = useState("");
 
-  const auth = FIREBASE_AUTH;
+ const auth = FIREBASE_AUTH;
+ const db = FIREBASE_DATABASE;
 
-  const handleSingup = () => {
-    if (password !== confirmpassword) {
-      alert("Senhas diferentes");
-      return;
-    } else {
-    createUserWithEmailAndPassword(auth, email, password)
-    .then(( item ) => {
-      const user = item.user;
-      console.log("Usuario criado com sucesso");
-      addDoc(collection(FIREBASE_DATABASE, "users"), {
-        id: user.uid,
-        nome: nome,
-        email: email,
-      });
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-    }
-    navigation.navigate("Perfil")
-  };
-  
-  
+ const handleSingup = () => {
+   if (password !== confirmpassword) {
+     alert("Senhas diferentes");
+     return;
+   } else {
+     createUserWithEmailAndPassword(auth, email, password)
+       .then((item) => {
+         const user = item.user;
+         console.log("Usuario criado com sucesso");
+         const userRef = doc(collection(db, "users"), user.uid);
+         setDoc(userRef, { id: user.uid, nome: nome, email: email });
+       })
+       .catch((error) => {
+         console.log(error);
+       });
+   }
+   navigation.navigate("Perfil");
+ };
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Fazer Sing up</Text>
