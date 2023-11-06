@@ -9,6 +9,7 @@ import { Singup } from "./src/screens/Singup/Singup";
 import { EditarPerfil } from "./src/screens/Editar perfil/EditarPerfil";
 import { Eventos } from "./src/screens/Eventos/Eventos";
 import { CreateEvento } from "./src/screens/CreateEventos/CreateEventos";
+import { Foto } from "./src/screens/Camera/Foto";
 
 const Stack = createNativeStackNavigator();
 
@@ -26,6 +27,7 @@ export default function App() {
         <Stack.Screen name="Editar perfil" component={EditarPerfil} />
         <Stack.Screen name="Eventos" component={Eventos} />
         <Stack.Screen name="Criar Evento" component={CreateEvento} />
+        <Stack.Screen name="Foto" component={Foto} />
       </Stack.Navigator>
     </NavigationContainer>
   );
