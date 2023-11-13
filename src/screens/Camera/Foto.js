@@ -2,9 +2,12 @@ import { Camera, CameraType } from "expo-camera";
 import { useRef } from "react";
 import { Button, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
-export function Foto({navigation}) {
+export function Foto({navigation, route}) {
   const [permission, requestPermission] = Camera.useCameraPermissions();
   const cameraRef = useRef(null);
+
+  const onPhotoTaken = route.params?.onPhotoTaken;
+
   if (!permission) {
     return <View />;
   }
@@ -23,8 +26,7 @@ export function Foto({navigation}) {
   async function tirarFoto() {
     if (cameraRef.current) {
       const photo = await cameraRef.current.takePictureAsync();
-      console.log("Photo taken: ", photo.uri);
-      // Navegação para a próxima página
+      onPhotoTaken && onPhotoTaken(photo.uri);
       navigation.navigate("Criar Evento", { photoUrl: photo.uri });
     }
   }
