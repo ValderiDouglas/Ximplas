@@ -19,6 +19,12 @@ export const evento = StyleSheet.create({
     borderRadius: 6,
     height: 110,
   },
+  foto1: {
+    backgroundColor: "darkgray",
+    margin:0,
+    borderRadius: 6,
+    height: 110,
+  },
   boxtexto: {
     paddingHorizontal: 8,
     paddingBottom: 2,

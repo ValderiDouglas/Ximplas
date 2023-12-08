@@ -10,6 +10,9 @@ import { EditarPerfil } from "./src/screens/Editar perfil/EditarPerfil";
 import { Eventos } from "./src/screens/Eventos/Eventos";
 import { CreateEvento } from "./src/screens/CreateEventos/CreateEventos";
 import { Foto } from "./src/screens/Camera/Foto";
+import { RUDevento } from "./src/screens/RUDeventos/RUDevento";
+import { Abrir } from "./src/screens/Abrir/Abrir";
+
 
 const Stack = createNativeStackNavigator();
 
@@ -28,6 +31,8 @@ export default function App() {
         <Stack.Screen name="Eventos" component={Eventos} />
         <Stack.Screen name="Criar Evento" component={CreateEvento} />
         <Stack.Screen name="Foto" component={Foto} />
+        <Stack.Screen name="Editar Evento" component={RUDevento} />
+        <Stack.Screen name="Abrir" component={Abrir} />
       </Stack.Navigator>
     </NavigationContainer>
   );

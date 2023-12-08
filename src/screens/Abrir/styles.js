@@ -37,4 +37,10 @@ export const styles = StyleSheet.create({
     color: "gray",
     fontSize: 15,
   }
+  ,
+  botoesContainer: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    marginTop: 16,
+  },
 });

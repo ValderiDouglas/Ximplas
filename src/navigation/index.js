@@ -41,7 +41,7 @@ export function Navegator (){
           component={Mapa}
           options={{ title: "Mapa de Eventos" }}
         />
-        <Tab.Screen name="Favoritos" component={Favoritos} />
+        {/* <Tab.Screen name="Favoritos" component={Favoritos} /> */}
         <Tab.Screen name="Perfil" component={Perfil} />
       </Tab.Navigator>
 

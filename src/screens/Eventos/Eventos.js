@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, FlatList, Button, Image } from "react-native";
+import { View, Text, FlatList, Button, Image, TouchableOpacity } from "react-native";
 import { styles } from "./styles";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { FIREBASE_AUTH, FIREBASE_DATABASE } from "../../../firebaseConfig";
@@ -23,48 +23,51 @@ export function Eventos({ navigation }) {
     const getDados = async () => {
       try {
         const db = getFirestore();
-        const collectionRef = collection(db, "event", id, "evento"); // Corrigido para obter uma referência à coleção "event"
+        const collectionRef = collection(db, "eventos");
         const querySnapshot = await getDocs(collectionRef);
 
         const dadosArray = [];
-
         querySnapshot.forEach((docSnap) => {
-          if (docSnap.exists()) {
+          if (docSnap.exists()&& docSnap.data().fk_user === id) {
             // Adiciona os dados de cada documento a um array
+            console.log(docSnap.data());
             dadosArray.push(docSnap.data());
           } else {
             console.log("No such document!");
           }
         });
-
-        // Define os dados no estado ou realiza outra ação conforme necessário
         setDados(dadosArray);
-        // const timestampInMillis =
-        //   dadosArray[1].startDate
-        // console.log(timestampInMillis);
-
+        console.log(dados);
       } catch (error) {
         console.error(error);
       }
     };
 
     getDados();
-  }, [id]); // Remova [id] se você quiser buscar os documentos uma vez na montagem do componente
+  }, [id]);
 
-  console.log(dados);
+  // console.log(dados);
 
-  // "nanoseconds": 302000000,
-  //   "seconds": 1699832806,
   const ItemList = ({ item }) => (
+    <TouchableOpacity onPress={() => navigation.navigate("Editar Evento", { id: item.eventId } )}>
     <View style={styles.lista}>
-      <View style={styles.foto}></View>
+      <View style={styles.foto}>
+        {item.imageUrl && (
+          <Image
+            source={{ uri: item.imageUrl }}
+            style={styles.foto1}
+          />
+        )}
+      </View>
       <View style={styles.box}>
         <Text style={styles.data}>date</Text>
         <Text style={styles.titulo}>{item.nome}</Text>
         <Text style={styles.local}>{item.endereco}</Text>
       </View>
     </View>
+    </TouchableOpacity>
   );
+  
 
   return (
     <View style={styles.container}>
